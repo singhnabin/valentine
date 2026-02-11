@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Proposal 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- GSAP Animation Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- tsParticles -->
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fff5f7, #ffe9f0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+#tsparticles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+.card {
+    background: white;
+    padding: 50px;
+    border-radius: 25px;
+    box-shadow: 0 20px 60px rgba(255, 105, 135, 0.2);
+    text-align: center;
+    width: 420px;
+    position: relative;
+    z-index: 5;
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 50px;
+    color: #e63978;
+}
+
+.subtitle {
+    color: #c2185b;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 12px 30px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.yes {
+    background: #ff4d6d;
+    color: white;
+    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.4);
+}
+
+.no {
+    position: fixed;
+    background: white;
+    color: #ff4d6d;
+    z-index: 20;
+    transition: 0.3s ease;
+}
+
+.scene {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.big-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 80px;
+    color: #ff4d6d;
+}
+
+.love-message {
+    margin-top: 20px;
+    font-size: 22px;
+    color: #b5179e;
+    width: 600px;
+    max-width: 90%;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div id="tsparticles"></div>
+
+<div class="card" id="card">
+    <h1>Will You Be My Valentine?</h1>
+    <div class="subtitle">You are my favorite notification every day 💌</div>
+    <button class="yes" onclick="startMagic()">Yes 💍</button>
+</div>
+
+<button class="no" id="noBtn">No 😈</button>
+
+<div class="scene" id="scene">
+    <div class="big-text">She Said YES 💖</div>
+    <div class="love-message">
+        From this moment forward, every sunrise feels warmer,  
+        every night feels softer,  
+        and my heart feels fuller... 🌹✨
+    </div>
+</div>
+
+<script>
+/* Particles Setup */
+tsParticles.load("tsparticles", {
+    particles: {
+        number: { value: 50 },
+        color: { value: ["#ff4d6d", "#ff99ac"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.4 },
+        size: { value: 4 },
+        move: {
+            enable: true,
+            speed: 1,
+            direction: "top",
+            outModes: "out"
+        }
+    },
+    background: { color: "transparent" }
+});
+
+/* Move NO button safely */
+const noBtn = document.getElementById("noBtn");
+noBtn.style.left = "60%";
+noBtn.style.top = "65%";
+
+function moveButton() {
+    const margin = 20;
+    const maxX = window.innerWidth - noBtn.offsetWidth - margin;
+    const maxY = window.innerHeight - noBtn.offsetHeight - margin;
+
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+}
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+
+/* Cinematic YES */
+function startMagic() {
+    noBtn.remove();
+
+    const card = document.getElementById("card");
+    const scene = document.getElementById("scene");
+
+    gsap.to(card, {
+        scale: 0.5,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.inOut"
+    });
+
+    setTimeout(() => {
+        scene.style.pointerEvents = "auto";
+        gsap.to(scene, {
+            opacity: 1,
+            duration: 2
+        });
+
+        gsap.from(".big-text", {
+            y: -100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "bounce"
+        });
+
+        gsap.from(".love-message", {
+            y: 50,
+            opacity: 0,
+            duration: 2,
+            delay: 0.5
+        });
+
+        gsap.to("body", {
+            background: "linear-gradient(135deg, #ffe5ec, #ffc2d1, #ffb3c6)",
+            duration: 2
+        });
+
+    }, 800);
+}
+</script>
+
+</body>
+</html>
